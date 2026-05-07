@@ -39,7 +39,7 @@
     {/if}
     
     {#if !data.event?.id}
-        <button type="submit" disabled={submitting}>Create Event</button>
+        <button type="submit" disabled={submitting}>{submitting ? 'Creating Event...' : 'Create Event'}</button>
     {/if}
     {#if data.event?.id}
         <input type="hidden" name="id" value={data.event.id}>
