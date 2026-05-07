@@ -6,7 +6,6 @@ import type { PageServerLoad } from '../$types';
 export const load: PageServerLoad = async () => {
     return {
         event: {
-            id: null,
             title: '',
             description: '',
             date: ''
@@ -45,7 +44,9 @@ export const actions: Actions = {
 
         const errors = validateEvent(event);
         if (Object.keys(errors).length > 0) {
-            return fail(422, { errors, values: errors });
+            return fail(422, { 
+                errors: errors 
+            });
             //return { message: 'Resolve the errors before submitting the Event.', event: event, errors: errors };
         }
         

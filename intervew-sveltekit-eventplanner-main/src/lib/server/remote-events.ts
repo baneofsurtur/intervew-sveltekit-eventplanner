@@ -14,8 +14,7 @@ const eventStorage = new Storage<Event>('data/events.json');
 
 // Helper function to simulate random delays
 function simulateDelay<T>(result: T): Promise<T> {
-    const delay = 5000; // Simulate a 3-second delay
-    //const delay = Math.random() * (3000 - 500) + 500; // Random delay between 0.5 and 3 seconds
+    const delay = Math.random() * (3000 - 500) + 500; // Random delay between 0.5 and 3 seconds
     return new Promise(resolve => setTimeout(() => resolve(result), delay));
 }
 
