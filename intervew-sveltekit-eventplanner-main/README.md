@@ -73,4 +73,3 @@ This project has some intentional gaps for you to address. Your task is to compl
 1. Freestyle (Optional)
 
     - Task: Add any other features or improvements you like to show off your knowledge.
-    - Task: Create homepage or have it start on Events

@@ -17,13 +17,8 @@
     };
 
     let submitting = $state(false);
-    let { event, message, errors }: {event: Event, message?: string, errors?: EventError} = $props();
+    let { event, errors }: {event: Event, errors?: EventError} = $props();
 </script>
-
-
-{#if message}
-  <p class="success">✅ {message}</p>
-{/if}
 
 <form method="POST" novalidate use:enhance={() => {
     // This code runs right when the form is submitted
@@ -82,24 +77,5 @@
   .error {
     color: #c00;
     font-size: 0.875rem;
-  }
-
-  .success {
-    color: #0a7;
-    margin-bottom: 1rem;
-  }
-
-  button {
-    color: white;
-    border: 1px solid white;
-    background-color: blue;
-  }
-  button.delete-button {
-    background-color: red;
-    border: 1px solid red;
-  }
-  button:disabled {
-    background-color: gray;
-    border: 1px solid gray;
   }
 </style>

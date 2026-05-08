@@ -1,6 +1,6 @@
-import { createEvent, deleteEventById, fetchEventById, updateEventById } from "$lib/server/remote-events";
+import { fetchEventById, updateEventById } from "$lib/server/remote-events";
 import type { Actions } from "../$types";
-import { error, fail, redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from '../$types';
 
 export const load: PageServerLoad = async ({params}) => {
@@ -17,6 +17,7 @@ type EventErrors = {
 	date?: string;
 };
 
+// Validates the event data and returns any errors found.
 function validateEvent(event: { title: string; description: string; date: string }): EventErrors {
     const errors: EventErrors = {};
     if (!event.title || event.title.trim() === '') {

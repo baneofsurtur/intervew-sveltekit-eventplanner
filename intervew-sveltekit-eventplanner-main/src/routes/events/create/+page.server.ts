@@ -1,6 +1,6 @@
 import { createEvent } from "$lib/server/remote-events";
 import type { Actions } from "../$types";
-import { error, fail, redirect, text } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from '../$types';
 
 export const load: PageServerLoad = async () => {

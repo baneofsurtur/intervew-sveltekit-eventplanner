@@ -45,8 +45,7 @@
                         loading={submitting && event.id === activeEventId} 
                         disabled={submitting} 
                         onclick={(event) => {
-                            event.stopPropagation(); // 👈 Stops the card navigation
-                            console.log('Button clicked, card ignored!');
+                            event.stopPropagation(); // Prevents the click event on the card from triggering
                         }}>{submitting && event.id === activeEventId ? 'Deleting...' : 'Delete'}</Button>
                 </form>
         </div>
