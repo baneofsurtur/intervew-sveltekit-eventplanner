@@ -18,6 +18,6 @@ export const actions: Actions = {
             error(400, 'Event ID is required');
         }
         await deleteEventById(Number(id));
-        throw redirect(303, `/events`);
+        return;
     }
 }

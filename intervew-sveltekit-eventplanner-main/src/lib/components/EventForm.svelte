@@ -17,12 +17,7 @@
     };
 
     let submitting = $state(false);
-    // console.log("EventForm props");
-    //console.log(JSON.stringify($props(), null, 2));
     let { event, message, errors }: {event: Event, message?: string, errors?: EventError} = $props();
-    // $effect(() => {
-	// 	console.log('EventForm message:', message);
-	// });
 </script>
 
 
