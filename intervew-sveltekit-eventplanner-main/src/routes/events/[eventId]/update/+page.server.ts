@@ -46,6 +46,6 @@ export const actions: Actions = {
                 });
             }
         const newEvent = await updateEventById(Number(formdata.get('id')), updatedEvent);
-        throw redirect(303, `/events/${newEvent?.id}`);
+        throw redirect(303, `/events`);
     },
 }
