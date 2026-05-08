@@ -2,6 +2,8 @@
 	import type { PageData } from "./$types";
     import { enhance } from '$app/forms';
     import { Button } from 'svelte-ux';
+    import { Card } from 'svelte-ux';
+    import { goto } from '$app/navigation';
 
     let submitting = $state(false);
     let activeEventId = $state<number | null>(null);
@@ -19,7 +21,28 @@
 {:then events} 
 <div class="flex flex-col gap-4">
     {#each events as event}
-        <div class="flex justify-between">
+    <Card title="{event.id}: {event.title}" subheading="{event.date}" onclick={() => goto(`/events/${event.id}`)}>
+        <div slot="contents">{event.description}</div>
+        <div slot="actions">
+            <Button variant="outline" href="/events/{event.id}/update" role="button">Update</Button>
+            <form class="inline-flex" method="POST" novalidate use:enhance={() => {
+                    // This code runs right when the form is submitted
+                    submitting = true;
+                    activeEventId = event.id;
+
+                    // Return a callback that runs after the server responds
+                    return async ({ update }) => {
+                        await update(); // apply the server's response to `form`
+                        submitting = false;
+                        activeEventId = null;
+                        };
+                }}>
+                    <input type="hidden" name="eventId" value={event.id} />
+                    <Button variant="fill" color="danger" type="submit" loading={submitting} disabled={submitting}>{submitting && event.id === activeEventId ? 'Deleting...' : 'Delete'}</Button>
+                </form>
+        </div>
+    </Card>
+        <!-- <div class="flex justify-between">
             <div class="flex flex-col"> 
                 <h2 class="text-lg font-bold"><a href="/events/{event.id}">{event.id}: {event.title}</a></h2>
                 <p>{event.description}</p>
@@ -43,7 +66,7 @@
                     <Button variant="fill" color="danger" type="submit" loading={submitting} disabled={submitting}>{submitting && event.id === activeEventId ? 'Deleting...' : 'Delete'}</Button>
                 </form>
             </div>
-        </div>
+        </div> -->
     {/each}
 </div>
 {:catch error}
