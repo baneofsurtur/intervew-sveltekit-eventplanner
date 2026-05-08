@@ -34,7 +34,7 @@ function validateEvent(event: { title: string; description: string; date: string
 }
 
 export const actions: Actions = {
-    createEvent: async ({request}) => {
+    default: async ({request}) => {
         const formdata = await request.formData();
         const event = {
             title: formdata.get('title')?.toString() ?? '',
@@ -47,11 +47,9 @@ export const actions: Actions = {
             return fail(422, { 
                 errors: errors 
             });
-            //return { message: 'Resolve the errors before submitting the Event.', event: event, errors: errors };
         }
         
         const newEvent = await createEvent(event);
-        //redirect(303, `/events`);
-        return { message: 'Event created successfully', event: newEvent };
+        throw redirect(303, `/events`);
     }
 }

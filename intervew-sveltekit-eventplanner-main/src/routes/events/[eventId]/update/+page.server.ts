@@ -32,7 +32,7 @@ function validateEvent(event: { title: string; description: string; date: string
 }
 
 export const actions: Actions = {
-    updateEvent: async ({request}) => {
+    default: async ({request}) => {
         const formdata = await request.formData();
         const updatedEvent = {
             title: formdata.get('title')?.toString() ?? '',
@@ -44,20 +44,8 @@ export const actions: Actions = {
                 return fail(422, { 
                     errors: errors 
                 });
-                //return { message: 'Resolve the errors before submitting the Event.', event: event, errors: errors };
             }
         const newEvent = await updateEventById(Number(formdata.get('id')), updatedEvent);
-        //redirect(303, `/events/${newEvent?.id}`);
-        return { message: 'Event updated successfully' };
+        throw redirect(303, `/events/${newEvent?.id}`);
     },
-    deleteEvent: async ({request}) => {
-        const formdata = await request.formData();
-        const id = formdata.get('id')?.toString();
-        if (!id) {
-            error(400, 'Event ID is required');
-        }
-        await deleteEventById(Number(id));
-        //redirect(303, `/events`);
-        return { message: 'Event deleted successfully' };
-    }
 }

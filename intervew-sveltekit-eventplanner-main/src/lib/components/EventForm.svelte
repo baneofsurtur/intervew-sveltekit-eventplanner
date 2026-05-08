@@ -30,7 +30,7 @@
   <p class="success">✅ {message}</p>
 {/if}
 
-<form method="POST" action="?/createEvent" novalidate use:enhance={() => {
+<form method="POST" novalidate use:enhance={() => {
     // This code runs right when the form is submitted
     submitting = true;
 
@@ -61,8 +61,7 @@
     {/if}
     {#if event?.id}
         <input type="hidden" name="id" value={event.id}>
-        <button type="submit" formaction="?/updateEvent">{submitting ? 'Updating Event...' : 'Update Event'}</button>
-        <button class="delete-button" type="submit" formaction="?/deleteEvent">{submitting ? 'Deleting Event...' : 'Delete Event'}</button>
+        <button type="submit" disabled={submitting}>{submitting ? 'Updating Event...' : 'Update Event'}</button>
     {/if}
 </form>
 
