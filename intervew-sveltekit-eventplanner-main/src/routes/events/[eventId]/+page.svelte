@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
     import { enhance } from '$app/forms';
+    import { Button } from 'svelte-ux';
 
     let submitting = $state(false);
     let {data}: {data: PageData} = $props();
@@ -10,12 +11,15 @@
 {#await data.event}
     Loading event...
 {:then event} 
-<div>
+<div class="flex flex-col gap-1">
     {#if event}
-        <h2 class="text-lg font-bold">{event.id}: {event.title}</h2>
-        <p>{event.description}</p>
-        <p>{event.date}</p>
-        <a class="btn" href="../events/{event.id}/update" role="button">Edit Event</a>
+        <div class="flex flex-col">
+            <h2 class="text-lg font-bold">{event.id}: {event.title}</h2>
+            <p>{event.description}</p>
+            <p>{event.date}</p>
+        </div>
+        <div class="flex gap-2">
+            <Button variant="outline" href="../events/{event.id}/update">Edit Event</Button>
         <form method="POST" novalidate use:enhance={() => {
             // This code runs right when the form is submitted
             submitting = true;
@@ -27,8 +31,9 @@
                 };
         }}>
             <input type="hidden" name="eventId" value={event.id} />
-            <button type="submit" disabled={submitting}>{submitting ? 'Deleting...' : 'Delete'}</button>
+            <Button variant="fill" color="danger" type="submit" loading={submitting} disabled={submitting}>{submitting ? 'Deleting...' : 'Delete'}</Button>
         </form>
+        </div>
     {/if}
     {#if !event}
         <p>Event not found.</p>
@@ -37,3 +42,7 @@
 {:catch error}
     <p>Error loading event: {error.message}</p>
 {/await}
+
+<style>
+    
+</style>

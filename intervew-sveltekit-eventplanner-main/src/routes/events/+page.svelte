@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
     import { enhance } from '$app/forms';
+    import { Button } from 'svelte-ux';
 
     let submitting = $state(false);
     let activeEventId = $state<number | null>(null);
@@ -11,12 +12,12 @@
 <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
 
 <div class="flex flex-row">
-<h1 class="text-xl">Events</h1> <a class="btn" href="/events/create" role="button">Add Event</a>
+<h1 class="text-xl">Events</h1> <Button href="/events/create">Add Event</Button>
 </div>
 {#await data.events}
     Loading events...
 {:then events} 
-<div class="flex flex-col">
+<div class="flex flex-col gap-4">
     {#each events as event}
         <div class="flex justify-between">
             <div class="flex flex-col"> 
@@ -24,9 +25,9 @@
                 <p>{event.description}</p>
                 <p>{event.date}</p>
             </div>
-            <div class="flex">
-                <a class="btn" href="/events/{event.id}/update" role="button">Update</a>
-                <form method="POST" novalidate use:enhance={() => {
+            <div class="flex gap-2">
+                <Button variant="outline" href="/events/{event.id}/update" role="button">Update</Button>
+                <form class="inline-flex" method="POST" novalidate use:enhance={() => {
                     // This code runs right when the form is submitted
                     submitting = true;
                     activeEventId = event.id;
@@ -39,7 +40,7 @@
                         };
                 }}>
                     <input type="hidden" name="eventId" value={event.id} />
-                    <button type="submit" disabled={submitting}>{submitting && event.id === activeEventId ? 'Deleting...' : 'Delete'}</button>
+                    <Button variant="fill" color="danger" type="submit" loading={submitting} disabled={submitting}>{submitting && event.id === activeEventId ? 'Deleting...' : 'Delete'}</Button>
                 </form>
             </div>
         </div>
@@ -53,6 +54,22 @@
 
 
 <style>
+.button-update {
+    background-color: rgb(70, 139, 223);
+}
+
+.button-delete {
+    background-color: rgb(143, 0, 0);
+}
+
+.button-event-list {
+    border-radius: 4px;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    @apply inline-flex items-center justify-center
+}
+
 .container {
   display: flex;
   flex-direction:column;

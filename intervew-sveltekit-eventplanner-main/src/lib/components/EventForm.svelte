@@ -1,6 +1,6 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
-    import { fly, slide } from 'svelte/transition';
+    import { Button } from 'svelte-ux';
 
     type Event = {
         id?: number;
@@ -57,11 +57,11 @@
     {/if}
     
     {#if !event?.id}
-        <button type="submit" disabled={submitting}>{submitting ? 'Creating Event...' : 'Create Event'}</button>
+        <Button variant="outline" type="submit" loading={submitting} disabled={submitting}>{submitting ? 'Creating Event...' : 'Create Event'}</Button>
     {/if}
     {#if event?.id}
         <input type="hidden" name="id" value={event.id}>
-        <button type="submit" disabled={submitting}>{submitting ? 'Updating Event...' : 'Update Event'}</button>
+        <Button variant="outline" type="submit" fill="default" loading={submitting} disabled={submitting}>{submitting ? 'Updating Event...' : 'Update Event'}</Button>
     {/if}
 </form>
 
